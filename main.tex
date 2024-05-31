@@ -5,97 +5,103 @@
 \usecolortheme{sidebartab}
 
 \mode<presentation>
-\title[Websocket]{Performance Evaluation of Websocket Protocol for Implementation of Full-Duplex Web Streams}
+\title[WebSocket]{Performance Evaluation of WebSocket Protocol for Implementation of Full-Duplex Web Streams}
 \author{Oleg Bilovus}
 \institute{Università degli Studi di Salerno}
 \date[SRF 1st]{1st Scalability Research Forum}
 
 \begin{document}
 \begin{frame}
-    \titlepage
-
+    \titlepage{}
 \end{frame}
 
 \AtBeginSection[]{ \begin{frame}\frametitle{Outline} \tableofcontents[currentsection]\end{frame} }
 
-\section{Motivation}
-\subsection{The Basic Problem That We Studied}
-
+\section{Background}
 \begin{frame}
-    \frametitle{What are Prime Numbers}
-    \begin{definition}
-        A \alert{prime number} is a number that has exactly two divisors.
-    \end{definition}
-    \pause
-    \begin{example}
-        \begin{itemize}
-            \item<2-> 2 is prime (two divisors: 1 and 2).
-
-            \item<3-> 3 is prime (two divisors: 1 and 3).
-
-            \item<4-> 4 is not prime (\alert{three} divisors: 1, 2, and 4).
-        \end{itemize}
-    \end{example}
+    \frametitle{Background}
+    \begin{itemize}[<+->]
+        \item \emph{Historically}, creating \alert<+->{web applications} that need \alert<+->{bidirectional
+                  communication} between a \alert<+->{client} and a \alert<+->{server} has required an \alert<+->{abuse of
+                  HTTP to poll} the server for updates while sending upstream notifications as
+              \alert<+->{distinct HTTP calls}.
+    \end{itemize}
 \end{frame}
 
+\subsection{HTTP polling}
 \begin{frame}
-    \frametitle{There Is No Largest Prime Number}
-    \framesubtitle{The proof uses \textit{reductio ad absurdum}.}
-    \begin{theorem}
-        There is no largest prime number.
-    \end{theorem}
-    \begin{proof}
-        \begin{enumerate}
-            \item<1-> Suppose $p$ were the largest prime number.
-
-            \item<2-> Let $q$ be the product of the first $p$ numbers.
-
-            \item<3-> Then $q + 1$ is not divisible by any of them.
-
-            \item<1-> But $q + 1$ is greater than $1$, thus divisible by some prime
-                number not in the first $p$ numbers.\qedhere
-        \end{enumerate}
-    \end{proof}
-    \uncover<4->{The proof used \textit{reductio ad absurdum}.}
-\end{frame}
-
-\begin{frame}
-    \frametitle{What's Still To Do}
+    \frametitle{HTTP polling}
     \begin{columns}
-        \column{.5\textwidth}
-        \begin{block}{Answered Questions}
-            How many primes are there?
-        \end{block}
-        \column{.5\textwidth}
-        \begin{block}{Open Questions}
-            Is every even number the sum of two primes?
-        \end{block}
+        \begin{column}{0.7\textwidth}
+            \begin{figure}
+                \includegraphics[width=0.7\textwidth]{images/polling.jpeg}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.4\textwidth}
+            \begin{itemize}[<+->]
+                \item this is a test hello hello hello
+                \item this is a test hello hello hello
+                \item this is a test hello hello hello
+            \end{itemize}
+        \end{column}
     \end{columns}
 \end{frame}
 
+\subsection{HTTP long polling}
+\begin{frame}
+    \frametitle{HTTP long Polling}
+    \begin{columns}
+        \begin{column}{0.7\textwidth}
+            \begin{figure}
+                \includegraphics[width=0.7\textwidth]{images/long_polling.jpeg}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.4\textwidth}
+            \begin{itemize}[<+->]
+                \item this is a test hello hello hello
+                \item this is a test hello hello hello
+                \item this is a test hello hello hello
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
 
-\section{Motivation 2}
-\subsection{The Basic Problem That We Studied 2}
+\subsection{Streaming}
+\begin{frame}
+    \frametitle{Streaming}
+    \begin{columns}
+        \begin{column}{0.7\textwidth}
+            \begin{figure}
+                \includegraphics[width=0.7\textwidth]{images/streaming.jpeg}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.4\textwidth}
+            \begin{itemize}[<+->]
+                \item this is a test hello hello hello
+                \item this is a test hello hello hello
+                \item this is a test hello hello hello
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
 
-\begin{frame}[fragile]
-    \frametitle{An Algorithm For Finding Primes Numbers.} \begin{semiverbatim}
-        \uncover<1->{\alert<0>{int main (void)}}
-        \uncover<1->{\alert<0>{\{}}
-        \uncover<1->{\alert<1>{  \alert<4>{std::}vector<bool> is_prime (100, true);}}
-        \uncover<1->{\alert<1>{  for (int i = 2; i < 100; i++)}}
-        \uncover<2->{\alert<2>{   if (is_prime[i])}}
-        \uncover<2->{\alert<0>{   \{}}
-        \uncover<3->{\alert<3>{     \alert<4>{std::}cout << i << " ";}}
-        \uncover<3->{\alert<3>{     for (int j = i; j < 100;)}}
-        \uncover<3->{\alert<3>{       is_prime[j] = false, j+=i);}}
-        \uncover<2->{\alert<0>{   \}}}
-        \uncover<1->{\alert<0>{  return 0;}}
-        \uncover<1->{\alert<0>{\}}}
-    \end{semiverbatim}
-    \visible<4->{Note the use of \alert{\texttt{std::}}.}
+\section{WebSocket protocol}
+
+\subsection{Definition}
+\begin{frame}
+    \frametitle{RFC 6455}
+    \framesubtitle{Keywords}
+    \begin{itemize}[<+->]
+        \item The WebSocket Protocol enables \alert<+->{two-way communication} between a
+              \alert<+->{client} running untrusted code in a controlled environment to a
+              \alert<+->{remote host} that has \alert<+->{opted-in} to communications from
+              that code.
+        \item The protocol consists of an opening \alert<+->{handshake} followed by basic
+              \alert<+->{message framing}, layered over \alert<+->{TCP}.
+        \item The goal of this technology is to provide a mechanism for
+              \alert<+->{browser-based} applications that need two-way communication with
+              servers.
+    \end{itemize}
 \end{frame}
 
 \end{document}
-
-
-
