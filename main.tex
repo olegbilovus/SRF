@@ -16,6 +16,7 @@
 \begin{document}
 \begin{frame}
     \titlepage{}
+    \note{We will talk about WebSockets and compare its performance with TCP Socket. But, before divinng into analysing the performance we need to understand why we needed WebSockets and whats they are.}
 \end{frame}
 
 \AtBeginSection[]{ \begin{frame}\frametitle{Outline} \tableofcontents[currentsection]\end{frame} }
@@ -65,6 +66,7 @@
             \begin{figure}
                 \includegraphics[width=0.7\textwidth]{images/long_polling.jpeg}
             \end{figure}
+            \note{Can hold the connection up to a certain time, after that a timeout is execed and need a new connection.}
         \end{column}
         \begin{column}<+->{0.35\textwidth}
             \begin{itemize}[<+->]
@@ -81,6 +83,7 @@
 \begin{frame}
     \frametitle{Streaming}
     Iframe embed a hidden frame in an HTML page, then set it as a long connection request, thus the server can send data to the clients constantly.
+    \note{iframe is an html page inside another.}
     \begin{columns}
         \begin{column}{0.7\textwidth}
             \begin{figure}
@@ -110,13 +113,23 @@
         \item The WebSocket Protocol enables \alert<+->{two-way communication} between a
               \alert<+->{client} running untrusted code in a controlled environment to a
               \alert<+->{remote host} that has \alert<+->{opted-in} to communications from
-              that code.
+              that code. \note{opted-in is important because with polling any HTTP server
+                  would accept it, but here additional steps are needed.}
         \item The protocol consists of an opening \alert<+->{handshake} followed by basic
-              \alert<+->{message framing}, layered over \alert<+->{TCP}.
+              \alert<+->{message framing}, layered over \alert<+->{TCP}. \note{handshake
+                  means client and server have to agree that they can both use the protocol and
+                  the server has to prove it.} \note{message framing because we do not want to
+                  send every time the headers.} \note{TCP means it is reliable, no messages will
+                  be lost.}
         \item The goal of this technology is to provide a mechanism for
               \alert<+->{browser-based} applications that need two-way communication with
               servers.
     \end{itemize}
+\end{frame}
+
+\subsection{Handshake}
+\begin{frame}
+    \frametitle{Handshake}
 \end{frame}
 
 \end{document}
