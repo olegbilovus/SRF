@@ -4,6 +4,9 @@
 \setbeamertemplate{footline}[frame number]
 \usecolortheme{sidebartab}
 
+%\setbeameroption{show only notes} % Only notes
+%\setbeameroption{show notes on second screen=right} % Both
+
 \mode<presentation>
 \title[WebSocket]{Performance Evaluation of WebSocket Protocol for Implementation of Full-Duplex Web Streams}
 \author{Oleg Bilovus}
@@ -25,6 +28,7 @@
                   communication} between a \alert<+->{client} and a \alert<+->{server} has required an \alert<+->{abuse of
                   HTTP to poll} the server for updates while sending upstream notifications as
               \alert<+->{distinct HTTP calls}.
+              \note{bidirectional means the server and the client can send data to each other at any time}
     \end{itemize}
 \end{frame}
 
@@ -42,8 +46,11 @@
             \begin{itemize}[<+->]
                 \item How often to query?
                 \item Continuously \alert{short interval} requests will be \alert{washed away} the
-                      server.
+                      server. \note{A client can send data and ask for data at the same time. But, if
+                          client has no data and server has no data, a request and response will still be
+                          generated with all the HTTP headers and thus wasting resources.}
                 \item \alert{Long interval} will require more time to reach the client, \alert{no real-time} data.
+                      \note{no real-time data because while the client waits, an event could occur and the client will know about it only when the timeout expires.}
             \end{itemize}
         \end{column}
     \end{columns}
@@ -63,6 +70,8 @@
             \begin{itemize}[<+->]
                 \item {\color{green} Solve the short polling frequency to access the server.}
                 \item \alert{No bidirectional communication}, server push data.
+                      \note{No biderectional because the client may only send data the first time but then it will only receive until a timeout and another request is made.}
+                      \note{In the normal polling we could have biderectional because the interval was shorter.}
             \end{itemize}
         \end{column}
     \end{columns}
@@ -83,7 +92,8 @@
                 \item It can sends {\color{green} multiple events} from a {\color{green} single
                               request}.
                 \item But, it increase the \alert{burden on the server}, causing the server
-                      \alert{performance degradation}, or even collapse.
+                      \alert{performance degradation}, or even collapse. \note{Because the server
+                          need to keep the connections alive.}
                 \item \alert{No bidirectional communication.}
             \end{itemize}
         \end{column}
