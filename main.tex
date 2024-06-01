@@ -1,5 +1,5 @@
 \documentclass{beamer}
-\beamertemplatenavigationsymbolsempty
+\beamertemplatenavigationsymbolsempty{}
 \usetheme{Goettingen}
 \setbeamertemplate{footline}[frame number]
 \usecolortheme{sidebartab}
@@ -31,17 +31,19 @@
 \subsection{HTTP polling}
 \begin{frame}
     \frametitle{HTTP polling}
+    Check whether the server is changed in a while, thereby performing incremental updates.
     \begin{columns}
         \begin{column}{0.7\textwidth}
             \begin{figure}
                 \includegraphics[width=0.7\textwidth]{images/polling.jpeg}
             \end{figure}
         \end{column}
-        \begin{column}{0.4\textwidth}
+        \begin{column}<+->{0.35\textwidth}
             \begin{itemize}[<+->]
-                \item this is a test hello hello hello
-                \item this is a test hello hello hello
-                \item this is a test hello hello hello
+                \item How often to query?
+                \item Continuously \alert{short interval} requests will be \alert{washed away} the
+                      server.
+                \item \alert{Long interval} will require more time to reach the client, \alert{no real-time} data.
             \end{itemize}
         \end{column}
     \end{columns}
@@ -49,18 +51,18 @@
 
 \subsection{HTTP long polling}
 \begin{frame}
-    \frametitle{HTTP long Polling}
+    \frametitle{HTTP long polling}
+    When a client sends a data request, the server will block the request until there is data transfer or timeout before returning.
     \begin{columns}
         \begin{column}{0.7\textwidth}
             \begin{figure}
                 \includegraphics[width=0.7\textwidth]{images/long_polling.jpeg}
             \end{figure}
         \end{column}
-        \begin{column}{0.4\textwidth}
+        \begin{column}<+->{0.35\textwidth}
             \begin{itemize}[<+->]
-                \item this is a test hello hello hello
-                \item this is a test hello hello hello
-                \item this is a test hello hello hello
+                \item {\color{green} Solve the short polling frequency to access the server.}
+                \item \alert{No bidirectional communication}, server push data.
             \end{itemize}
         \end{column}
     \end{columns}
@@ -69,17 +71,20 @@
 \subsection{Streaming}
 \begin{frame}
     \frametitle{Streaming}
+    Iframe embed a hidden frame in an HTML page, then set it as a long connection request, thus the server can send data to the clients constantly.
     \begin{columns}
         \begin{column}{0.7\textwidth}
             \begin{figure}
                 \includegraphics[width=0.7\textwidth]{images/streaming.jpeg}
             \end{figure}
         \end{column}
-        \begin{column}{0.4\textwidth}
+        \begin{column}<+->{0.35\textwidth}
             \begin{itemize}[<+->]
-                \item this is a test hello hello hello
-                \item this is a test hello hello hello
-                \item this is a test hello hello hello
+                \item It can sends {\color{green} multiple events} from a {\color{green} single
+                              request}.
+                \item But, it increase the \alert{burden on the server}, causing the server
+                      \alert{performance degradation}, or even collapse.
+                \item \alert{No bidirectional communication.}
             \end{itemize}
         \end{column}
     \end{columns}
