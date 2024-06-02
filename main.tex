@@ -234,7 +234,7 @@
         \centering
         \begin{tabular}{|c | p{0.6\linewidth}|}
             \hline
-            \textbf{Callback}  & \textbf{Description}                                                                                                    \\
+            \textbf{Callback}  & \textbf{Description}                                                                                                   \\
             \hline
             \hline
             \texttt{onopen}    & invoked when WebSocket \texttt{session is established}, signalizes that the protocol is ready to transfer payload data \\
@@ -247,6 +247,34 @@
             \hline
         \end{tabular}
     \end{table}
+\end{frame}
+
+\section{Performance vs TCP Socket}
+\note{We will now try to evaluate the WebSocket performance compared to the raw TCP Socket.}
+\subsection{Performance Evaluation}
+\begin{frame}
+    \frametitle{Performace Evaluation}
+    \begin{itemize}[<+->]
+        \item Performance evaluation of the WebSocket and the TCP Socket protocol consists
+              of:
+              \begin{itemize}[<+->]
+                  \item Network traffic
+                  \item Data transfer time
+              \end{itemize}
+        \item Network traffic is \textit{evaluated analytically} using the protocol
+              specifications.
+        \item Data transfer time is \textit{evaluated experimentally} in a laboratory test
+              bed.
+    \end{itemize}
+\end{frame}
+
+\subsection{WebSocket TCP}
+\begin{frame}
+    \frametitle{WebSocket TCP sequence diagram}
+    \note{WebSocket stay on top of TCP which means it will always add more overhead than the raw TCP Socket, but WebSocket is easier to use in a web environment.}
+    \begin{figure}
+        \includegraphics[width=0.9\textwidth]{images/websocket_seq_diagram.jpeg}
+    \end{figure}
 \end{frame}
 
 \begin{frame}
