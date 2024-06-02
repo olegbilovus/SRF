@@ -97,7 +97,7 @@
                 \item But, it increases the \alert{burden on the server}, causing the server
                       \alert{performance degradation}, or even collapse. \note{Because the server
                           need to keep the connections alive.}
-                \item \alert{No bidirectional communication.}
+                \item \alert{No bidirectional communication}.
             \end{itemize}
         \end{column}
     \end{columns}
@@ -226,11 +226,33 @@
     \end{figure}
 \end{frame}
 
+\subsection{API}
+\begin{frame}
+    \frametitle{WebSocket API}
+    The API is defined by its states of readiness, responses to a networking or messaging \alert{event}.
+    \begin{table}
+        \centering
+        \begin{tabular}{|c | p{0.6\linewidth}|}
+            \hline
+            \textbf{Callback}  & textbf{Description}                                                                                                    \\
+            \hline
+            \hline
+            \texttt{onopen}    & invoked when WebSocket \texttt{session is established}, signalizes that the protocol is ready to transfer payload data \\
+            \hline
+            \texttt{onerror}   & invoked whenever an \texttt{error occurs}                                                                              \\
+            \hline
+            \texttt{onclose}   & invoked when one of the peers has \texttt{terminated the session}                                                      \\
+            \hline
+            \texttt{onmessage} & invoked when an \texttt{incoming message} from another peer has arrived                                                \\
+            \hline
+        \end{tabular}
+    \end{table}
+\end{frame}
+
 \begin{frame}
     \nocite{*}
     \frametitle{References}
     \bibliographystyle{amsalpha}
     \bibliography{bib.bib}
 \end{frame}
-
 \end{document}
