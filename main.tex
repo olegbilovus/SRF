@@ -484,8 +484,20 @@
         \item WebSocket uses event-driven callback-based API to deliver data, which requires
               additional application data handling.
         \item In 2014, the WebSocket protocol emerged just a few years before with little
-              production systems deployed. While TCP has been used in production for
-              decades and has highly optimized libraries.
+              production systems deployed. While TCP has been used in production for decades
+              and has highly optimized libraries.
+    \end{itemize}
+\end{frame}
+
+\section{Conclusion}
+\begin{frame}
+    \begin{itemize}[<+->]
+        \item As expected, TCP slightly outperforms WebSocket because the WebSocket sits on
+              top of it.
+        \item The amount of generated network traffic is almost the same.
+        \item The difference in data transfer time is remarkable.
+        \item The advantages of the WebSocket protocol is its alignment with the existing Web
+              infrastructure, where low-level TCP protocol is not directly applicable.
     \end{itemize}
 \end{frame}
 
